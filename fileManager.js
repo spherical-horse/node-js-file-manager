@@ -2,6 +2,7 @@ import { EOL, homedir } from 'os';
 import path from 'path';
 import process from 'process';
 import cd from './cd.js';
+import ls from './ls.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -43,8 +44,12 @@ process.stdin.on('data', async (data) => {
     case 'cd':
       await cd(command, state);
       break;
+    case 'ls':
+      const out = await ls(state);
+      process.stdout.write(out);
+      break;
     default:
-      console.log(command);
+      console.log(state);
   }
   process.stdout.write(`You are currently in ${state.currentDir}${EOL}`);
 });
