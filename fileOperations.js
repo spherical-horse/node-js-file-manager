@@ -63,4 +63,14 @@ const move = async (command, state) => {
   }
 }
 
-export { cat, add, rn, copy, move };
+const del = async (command, state) => {
+  const [pathToFile] = command.args;
+  try {
+    const pathToFileAbsolute = path.join(path.isAbsolute(pathToFile) ? pathToFile : path.join(state.currentDir, path.normalize(pathToFile)));
+    await rm(pathToFileAbsolute, { recursive: true });
+  } catch (error) {
+    process.stdout.write('Operation failed' + EOL);
+  }
+}
+
+export { cat, add, rn, copy, move, del };
