@@ -3,6 +3,7 @@ import path from 'path';
 import process from 'process';
 import cd from './cd.js';
 import ls from './ls.js';
+import { cat } from './fileOperations.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -47,6 +48,9 @@ process.stdin.on('data', async (data) => {
     case 'ls':
       const out = await ls(state);
       process.stdout.write(out);
+      break;
+    case 'cat':
+      await cat(command, state);
       break;
     default:
       console.log(state);
