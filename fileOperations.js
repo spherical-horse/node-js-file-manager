@@ -1,5 +1,5 @@
 import { createReadStream } from 'fs';
-import { appendFile } from 'fs/promises';
+import { appendFile, rename } from 'fs/promises';
 import path from 'path';
 import { EOL } from 'os';
 
@@ -29,4 +29,15 @@ const add = async (command, state) => {
 
 }
 
-export { cat, add };
+const rn = async (command, state) => {
+  const [oldName, newName] = command.args;
+  try {
+    const oldPathAbsolute = path.join(path.isAbsolute(oldName) ? oldName : path.join(state.currentDir, path.normalize(oldName)));
+    const newPathAbsolute = path.join(path.isAbsolute(newName) ? newName : path.join(state.currentDir, path.normalize(newName)));
+    await rename(oldPathAbsolute, newPathAbsolute);
+  } catch (error) {
+    process.stdout.write('Operation failed' + EOL);
+  }
+}
+
+export { cat, add, rn };
