@@ -3,7 +3,7 @@ import path from 'path';
 import process from 'process';
 import cd from './cd.js';
 import ls from './ls.js';
-import { cat } from './fileOperations.js';
+import { cat, add } from './fileOperations.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -52,8 +52,11 @@ process.stdin.on('data', async (data) => {
     case 'cat':
       await cat(command, state);
       break;
+    case 'add':
+      await add(command, state);
+      break;
     default:
-      console.log(state);
+      console.log('default');
   }
   process.stdout.write(`You are currently in ${state.currentDir}${EOL}`);
 });

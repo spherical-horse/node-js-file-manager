@@ -1,4 +1,5 @@
 import { createReadStream } from 'fs';
+import { appendFile } from 'fs/promises';
 import path from 'path';
 import { EOL } from 'os';
 
@@ -17,4 +18,15 @@ const cat = async (command, state) => {
   });
 }
 
-export { cat };
+const add = async (command, state) => {
+  const [pathToFile] = command.args;
+  try {
+    const pathToFileAbsolute = path.join(path.isAbsolute(pathToFile) ? pathToFile : path.join(state.currentDir, path.normalize(pathToFile)));
+    await appendFile(pathToFileAbsolute, '');
+  } catch (error) {
+    process.stdout.write('Operation failed' + EOL);
+  }
+
+}
+
+export { cat, add };
