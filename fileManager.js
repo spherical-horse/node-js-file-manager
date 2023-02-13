@@ -4,6 +4,7 @@ import process from 'process';
 import cd from './cd.js';
 import ls from './ls.js';
 import { cat, add, rn, copy, move, del } from './fileOperations.js';
+import osOperations from './osOperations.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -66,6 +67,10 @@ process.stdin.on('data', async (data) => {
       break;
     case 'rm':
       await del(command, state);
+      break;
+    case 'os':
+      const out1 = osOperations(command);
+      console.log(out1 ? out1 : 'Operation failed' + EOL);
       break;
     default:
       console.log('default');
