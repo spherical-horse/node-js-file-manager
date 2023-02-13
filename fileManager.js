@@ -3,7 +3,7 @@ import path from 'path';
 import process from 'process';
 import cd from './cd.js';
 import ls from './ls.js';
-import { cat, add, rn } from './fileOperations.js';
+import { cat, add, rn, copy } from './fileOperations.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -57,6 +57,9 @@ process.stdin.on('data', async (data) => {
       break;
     case 'rn':
       await rn(command, state);
+      break;
+    case 'cp':
+      await copy(command, state);
       break;
     default:
       console.log('default');

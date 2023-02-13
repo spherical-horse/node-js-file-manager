@@ -1,5 +1,5 @@
 import { createReadStream } from 'fs';
-import { appendFile, rename } from 'fs/promises';
+import { appendFile, rename, cp } from 'fs/promises';
 import path from 'path';
 import { EOL } from 'os';
 
@@ -40,4 +40,15 @@ const rn = async (command, state) => {
   }
 }
 
-export { cat, add, rn };
+const copy = async (command, state) => {
+  const [source, destination] = command.args;
+  try {
+    const sourceAbsolute = path.join(path.isAbsolute(source) ? source : path.join(state.currentDir, path.normalize(source)));
+    const destinationAbsolute = path.join(path.isAbsolute(destination) ? destination : path.join(state.currentDir, path.normalize(destination)));
+    await cp(sourceAbsolute, destinationAbsolute, { recursive: true });
+  } catch (error) {
+    process.stdout.write('Operation failed' + EOL);
+  }
+}
+
+export { cat, add, rn, copy };
