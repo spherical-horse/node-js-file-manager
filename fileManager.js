@@ -5,6 +5,7 @@ import cd from './cd.js';
 import ls from './ls.js';
 import { cat, add, rn, copy, move, del } from './fileOperations.js';
 import osOperations from './osOperations.js';
+import hash from './hash.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -71,6 +72,9 @@ process.stdin.on('data', async (data) => {
     case 'os':
       const out1 = osOperations(command);
       console.log(out1 ? out1 : 'Operation failed' + EOL);
+      break;
+    case 'hash':
+      hash(command, state);
       break;
     default:
       console.log('default');
