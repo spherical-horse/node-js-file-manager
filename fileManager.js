@@ -7,6 +7,7 @@ import { cat, add, rn, copy, move, del } from './fileOperations.js';
 import osOperations from './osOperations.js';
 import hash from './hash.js';
 import compress from './compress.js';
+import deCompress from './decompress.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -79,6 +80,9 @@ process.stdin.on('data', async (data) => {
       break;
     case 'compress':
       await compress(command, state);
+      break;
+    case 'decompress':
+      await deCompress(command, state);
       break;
     default:
       console.log('default');
