@@ -6,6 +6,7 @@ import ls from './ls.js';
 import { cat, add, rn, copy, move, del } from './fileOperations.js';
 import osOperations from './osOperations.js';
 import hash from './hash.js';
+import compress from './compress.js';
 
 const getNameFromArgs = () => {
   const args = process.argv.slice(2);
@@ -75,6 +76,9 @@ process.stdin.on('data', async (data) => {
       break;
     case 'hash':
       hash(command, state);
+      break;
+    case 'compress':
+      await compress(command, state);
       break;
     default:
       console.log('default');
